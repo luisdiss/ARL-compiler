@@ -5,4 +5,4 @@ description = "A compiler built from scratch for a custom imperative language"
 requires-python = ">=3.11"
 
 [tool.setuptools]
-packages = ["compiler"]
+packages = ["compiler", "compiler.lexer", "compiler.parser", "compiler.sa", "compiler.codegen"]
