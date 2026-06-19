@@ -11,7 +11,7 @@ def semantic_analyser(ast_root: Any) -> SA:
     if any semantic errors were collected during either pass.
 
     Args:
-        ast_root: The root node of the Abstract Syntax Tree to analyze.
+        ast_root: The root node of the Abstract Syntax Tree to analyse.
 
     Returns:
         The populated SA state object.

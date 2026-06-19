@@ -5,7 +5,7 @@ from compiler.errors import LexError, SourcePos
 
 def lexer(s: str) -> list[Token]:
     """
-    Tokenize the input string using the configured DFA state table.
+    Tokenise the input string using the configured DFA state table.
 
     Walks the input character by character, following transitions defined
     in ``state_table``. Whenever an accepting state is reached the
@@ -14,7 +14,7 @@ def lexer(s: str) -> list[Token]:
     and lexing resumes from the start state.
 
     Args:
-        s: Input source text to tokenize.
+        s: Input source text to tokenise.
 
     Returns:
         A list of Token objects carrying type, value, and source position.

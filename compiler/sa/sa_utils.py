@@ -76,7 +76,7 @@ class Symbol:
 
 
 class Types(Enum):
-    """Enumeration of primitive types supported by the semantic analyzer."""
+    """Enumeration of primitive types supported by the semantic analyser."""
 
     number = auto()
     string = auto()
@@ -315,7 +315,7 @@ class InferenceVisitor(InferenceBaseVisitor):
 
     def visit_FuncDefNode(self, node: Any) -> None:
         """
-        Processes a function definition to initialize symbol metadata.
+        Processes a function definition to initialise symbol metadata.
 
         Maps parameters to symbols, stores parameter lists, and links
         the symbol to its definition node.

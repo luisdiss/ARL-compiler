@@ -2,7 +2,7 @@ from enum import Enum, auto
 
 
 class TokenTypes(Enum):
-    """Token types recognized by the lexer."""
+    """Token types recognised by the lexer."""
 
     ID = auto()
     NUMBER = auto()
@@ -27,8 +27,7 @@ class Token(tuple):
     """
     A (type, value) tuple carrying source position.
 
-    Inherits from tuple so Token("ID", "x", 1, 5) == ("ID", "x") is True
-    and `token_type, value = token` still works — existing tests need no changes.
+    Inherits from tuple so Token("ID", "x", 1, 5) == ("ID", "x") is True.
     Position is available via .line and .col attributes.
     """
 

@@ -4,7 +4,7 @@ import pprint
 """
 Utility script that expands transition classes into explicit
 character-to-state mappings and writes the resulting flattened
-state table to a Python module.
+state table to a Python file.
 """
 
 from compiler.lexer.raw_state_table import raw_state_table, transiton_classes
@@ -15,7 +15,7 @@ def flatten_state_table(state_table: dict) -> dict:
     """
     Expand transition classes into direct character transitions.
 
-    Each transition class in ``transiton_classes`` is replaced with
+    Each transition class in `transiton_classes` is replaced with
     individual character entries so the resulting state table can
     perform O(1) character lookups during lexing.
 
