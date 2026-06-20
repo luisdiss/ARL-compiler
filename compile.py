@@ -1,7 +1,7 @@
 import sys
 import os
 from compiler.errors import CompilerError, CompilationFailed
-from compiler import compiler
+from compiler.compiler import compiler
 
 filename = sys.argv[1]
 out_filename = os.path.splitext(filename)[0] + ".s"
