@@ -1,4 +1,4 @@
-from typing import NamedTuple, Optional, List
+from typing import NamedTuple
 
 
 class SourcePos(NamedTuple):
@@ -9,27 +9,34 @@ class SourcePos(NamedTuple):
         return f"line {self.line}, col {self.col}"
 
 
-class CompilerError(Exception):
-    def __init__(self, message: str, pos: Optional[SourcePos] = None) -> None:
+class CompilationError(Exception):
+    def __init__(self, *args, errors: list['CompilationError'] | None = None):
+        self._errors = errors
+        if errors is not None and not args:
+            msgs = "\n".join(f"  {e}" for e in errors)
+            super().__init__(f"{len(errors)} error(s):\n{msgs}")
+        else:
+            super().__init__(*args)
+
+    @property
+    def errors(self) -> list['CompilationError']:
+        return self._errors if self._errors is not None else [self]
+
+
+class SourceError(CompilationError):
+    def __init__(self, message: str, pos: SourcePos):
         self.pos = pos
-        loc = f" ({pos})" if pos else ""
-        super().__init__(f"{message}{loc}")
+        super().__init__(f"{message} ({pos})")
 
 
-class LexError(CompilerError):
+class LexError(SourceError):
     pass
 
 
-class ParseError(CompilerError):
+class ParseError(SourceError):
     pass
 
 
-class SemanticError(CompilerError):
+class SemanticError(CompilationError):
     pass
 
-
-class CompilationFailed(Exception):
-    def __init__(self, errors: List[CompilerError]) -> None:
-        self.errors = errors
-        msgs = "\n".join(str(e) for e in errors)
-        super().__init__(f"Compilation failed with {len(errors)} error(s):\n{msgs}")

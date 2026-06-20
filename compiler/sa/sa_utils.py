@@ -1,5 +1,5 @@
 from compiler.parser.ast_nodes import KeyWordParamNode, ArgNode, KeyWordArgNode, FuncDefNode
-from compiler.errors import SemanticError
+from compiler.errors import CompilationError, SemanticError
 from enum import Enum, auto
 from typing import Dict, List, Optional, Any
 

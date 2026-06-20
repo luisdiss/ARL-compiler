@@ -1,5 +1,5 @@
 from compiler.sa.sa_utils import SA, ScopeDeclVisitor, InferenceVisitor
-from compiler.errors import CompilationFailed
+from compiler.errors import CompilationError
 from typing import Any
 
 
@@ -7,7 +7,7 @@ def semantic_analyser(ast_root: Any) -> SA:
     """
     Executes the complete semantic analysis pipeline on the provided AST.
 
-    Runs scope declaration then type inference. Raises CompilationFailed
+    Runs scope declaration then type inference. Raises CompilationError
     if any semantic errors were collected during either pass.
 
     Args:
@@ -17,7 +17,7 @@ def semantic_analyser(ast_root: Any) -> SA:
         The populated SA state object.
 
     Raises:
-        CompilationFailed: If any semantic errors were encountered.
+        CompilationError: If any semantic errors were encountered.
     """
     sa = SA()
 
@@ -25,6 +25,6 @@ def semantic_analyser(ast_root: Any) -> SA:
     InferenceVisitor(sa).visit(ast_root)
 
     if sa.errors:
-        raise CompilationFailed(sa.errors)
+        raise CompilationError(errors=sa.errors)
 
     return sa

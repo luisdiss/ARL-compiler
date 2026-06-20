@@ -340,6 +340,8 @@ Semantic actions are triggered during parsing by embedding markers into the pars
 
 ## Error Handling
 
-Errors are represented as a hierarchy rooted at `CompilerError` in `compiler/errors.py`. The concrete types are `LexError`, `ParseError`, and `SemanticError`. Each carries an optional `SourcePos`, which is a NamedTuple of `(line, col)` using 1-based indexing to match what a user sees in their editor. A separate `CompilationFailed` exception bundles a list of collected errors for the semantic analysis phase.
+All errors inherit from `CompilationError`, which exposes an `.errors` property returning a `list[CompilationError]`. This gives callers a single, uniform way to iterate errors regardless of which phase raised them.
 
-The lexer and parser use a fail-fast strategy: the first error raises immediately. This is appropriate because there is no meaningful way to recover from an unexpected character or a grammar violation and continue producing a correct token stream or parse tree. The semantic analyser takes a different approach: errors are appended to a list on the `SA` state object and `CompilationFailed` is raised at the end of the analysis. This allows all type errors and undefined variable references in a program to be reported in a single pass rather than one at a time, which is more useful feedback when debugging.
+Lexer and parser errors (`LexError`, `ParseError`) inherit from `SourceError`, which carries a `SourcePos(line, col)` pinpointing where things went wrong. These phases fail immediately, since there's no sensible way to continue after an unexpected character or grammar violation.
+
+The semantic analyser works differently. It collects individual `SemanticError` instances into a list as it walks the tree, then raises a `CompilationError(errors=...)` at the end. This way you see all type mismatches and undefined variables in one pass instead of fixing them one at a time.
