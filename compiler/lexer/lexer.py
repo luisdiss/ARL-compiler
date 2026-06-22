@@ -71,5 +71,13 @@ def lexer(s: str) -> list[Token]:
             tok = Token.from_dfa(accepted_token_type, buffer, accepted_line, accepted_col)
             if tok:
                 tokens.append(tok)
+        else:
+            #new ------------------------
+            if buffer:
+                raise LexError(
+                    f"Unexpected token",
+                    SourcePos(line, col),
+                )
+            #----------------------------
 
     return tokens
